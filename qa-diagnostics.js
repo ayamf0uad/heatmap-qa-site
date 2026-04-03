@@ -26,17 +26,19 @@
             'cdn-5.convertapps-cloud.com',
             'cdn-5.convertapps-cloud.com.cdn.cloudflare.net',
         ],
-        // Patterns that indicate Convert-related requests
+        // Patterns that indicate Convert-related requests (includes TWIPLA — Convert's heatmap/recording provider)
         convertPatterns: [
             'convertexperiments', 'convertapps', 'convert.com',
             'signals.insights', 'conv_', '_conv_',
             '/v1/js/', '/metrics/v1/', '/api/v1/project-optional-settings',
+            'visitor-analytics', 'twipla', 'va.tawk',
         ],
         // Script filename patterns
         mainScriptPattern: /\/v1\/js\/(\d+)-(\d+)\.js/,
         signalsScriptPattern: /signals\.insights\.min\.js/,
-        // WebSocket patterns
+        // WebSocket patterns — TWIPLA uses wss://...visitor-analytics... for heatmap data
         wsPatterns: [
+            'visitor-analytics', 'twipla', 'va.tawk',
             'convertexperiments', 'convertapps', 'signals', 'heatmap', 'recording',
         ],
         // Cookie names
@@ -458,22 +460,26 @@
             error: 'error',
         };
 
-        // Determine if this is heatmap or signals WS
-        const isHeatmap = conn.url.includes('heatmap') || conn.url.includes('heat');
-        const isSignals = conn.url.includes('signals') || conn.url.includes('record') || conn.url.includes('session');
+        const url = conn.url.toLowerCase();
+
+        // TWIPLA is Convert's heatmap/recording provider — its WebSocket IS the heatmap connection
+        const isTwipla = url.includes('visitor-analytics') || url.includes('twipla') || url.includes('va.tawk');
+        const isHeatmap = isTwipla || url.includes('heatmap') || url.includes('heat');
+        const isSignals = url.includes('signals') || url.includes('record') || url.includes('session');
 
         if (isHeatmap || (!isSignals && conn.isConvert)) {
             const el = document.getElementById('status-ws-heatmap');
             const detail = document.getElementById('detail-ws-heatmap');
+            const provider = isTwipla ? ' [TWIPLA]' : '';
             if (el) setStatus(el, statusMap[conn.status] || 'pending');
-            if (detail) detail.textContent = `${conn.status.toUpperCase()} → ${conn.url}\nDomain: ${conn.domain} | Custom: ${conn.isCustomDomain ? 'YES' : 'NO'} | Frames: ${conn.frameCount}`;
+            if (detail) detail.textContent = `${conn.status.toUpperCase()}${provider} → ${conn.url}\nDomain: ${conn.domain} | Frames: ${conn.frameCount}`;
         }
 
         if (isSignals) {
             const el = document.getElementById('status-ws-signals');
             const detail = document.getElementById('detail-ws-signals');
             if (el) setStatus(el, statusMap[conn.status] || 'pending');
-            if (detail) detail.textContent = `${conn.status.toUpperCase()} → ${conn.url}\nDomain: ${conn.domain} | Custom: ${conn.isCustomDomain ? 'YES' : 'NO'} | Frames: ${conn.frameCount}`;
+            if (detail) detail.textContent = `${conn.status.toUpperCase()} → ${conn.url}\nDomain: ${conn.domain} | Frames: ${conn.frameCount}`;
         }
 
         // Update details panel
