@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog — Meridian</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="qa-panel" class="qa-panel hidden"></div>
+    <button id="qa-toggle" class="qa-toggle" title="Open QA Panel (Ctrl+Shift+Q)">🔬</button>
+
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="/" class="logo">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="2.5"/><path d="M8 14h12M14 8v12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                Meridian
+            </a>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/features.html">Features</a>
+                <a href="/pricing.html">Pricing</a>
+                <a href="/blog.html" style="color: var(--ink);">Blog</a>
+                <a href="/contact.html">Contact</a>
+            </div>
+            <div class="nav-actions">
+                <a href="#login" class="btn-ghost">Log in</a>
+                <a href="#signup" class="btn-primary">Start free trial</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="features" style="padding-top: 80px;">
+        <div class="section-header">
+            <h2>From the Meridian blog</h2>
+            <p>Insights on design systems, component architecture, and team collaboration.</p>
+        </div>
+
+        <div class="features-grid" style="grid-template-columns: 1fr 1fr; gap: 24px;">
+            <article class="feature-card" data-clickable style="padding: 0; overflow: hidden;">
+                <div style="height: 180px; background: linear-gradient(135deg, #2d5a27 0%, #4a8a42 100%);"></div>
+                <div style="padding: 24px;">
+                    <span style="font-size: 0.75rem; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.06em;">Design Systems</span>
+                    <h3 style="margin: 8px 0 12px;">Why your design system needs a versioning strategy</h3>
+                    <p style="font-size: 0.9rem; color: var(--ink-light);">Breaking changes are inevitable. Here's how to manage them without breaking your team's trust — or their builds.</p>
+                    <div style="margin-top: 16px; display: flex; align-items: center; gap: 8px;">
+                        <div class="avatar" style="background: #E8D5B7; width: 28px; height: 28px; margin: 0;"></div>
+                        <span style="font-size: 0.8rem; color: var(--ink-muted);">Sarah Chen · Mar 28, 2026</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="feature-card" data-clickable style="padding: 0; overflow: hidden;">
+                <div style="height: 180px; background: linear-gradient(135deg, #1a1a2e 0%, #3a3a5e 100%);"></div>
+                <div style="padding: 24px;">
+                    <span style="font-size: 0.75rem; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.06em;">Engineering</span>
+                    <h3 style="margin: 8px 0 12px;">Building accessible components that don't feel like accessibility theater</h3>
+                    <p style="font-size: 0.9rem; color: var(--ink-light);">Accessibility isn't a checklist. It's a design decision. Here's how we approach it at Meridian.</p>
+                    <div style="margin-top: 16px; display: flex; align-items: center; gap: 8px;">
+                        <div class="avatar" style="background: #B7D5E8; width: 28px; height: 28px; margin: 0;"></div>
+                        <span style="font-size: 0.8rem; color: var(--ink-muted);">Marcus Rivera · Mar 21, 2026</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="feature-card" data-clickable style="padding: 0; overflow: hidden;">
+                <div style="height: 180px; background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);"></div>
+                <div style="padding: 24px;">
+                    <span style="font-size: 0.75rem; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.06em;">Process</span>
+                    <h3 style="margin: 8px 0 12px;">The component adoption curve: why developers resist design systems</h3>
+                    <p style="font-size: 0.9rem; color: var(--ink-light);">You built it. They didn't come. Here's the playbook for getting developers to actually use your design system.</p>
+                    <div style="margin-top: 16px; display: flex; align-items: center; gap: 8px;">
+                        <div class="avatar" style="background: #D5B7E8; width: 28px; height: 28px; margin: 0;"></div>
+                        <span style="font-size: 0.8rem; color: var(--ink-muted);">Priya Sharma · Mar 14, 2026</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="feature-card" data-clickable style="padding: 0; overflow: hidden;">
+                <div style="height: 180px; background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);"></div>
+                <div style="padding: 24px;">
+                    <span style="font-size: 0.75rem; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.06em;">Tokens</span>
+                    <h3 style="margin: 8px 0 12px;">Design tokens in 2026: what's changed and what hasn't</h3>
+                    <p style="font-size: 0.9rem; color: var(--ink-light);">The W3C spec is finally stable. Here's what it means for your token strategy and migration path.</p>
+                    <div style="margin-top: 16px; display: flex; align-items: center; gap: 8px;">
+                        <div class="avatar" style="background: #B7E8C9; width: 28px; height: 28px; margin: 0;"></div>
+                        <span style="font-size: 0.8rem; color: var(--ink-muted);">Alex Kim · Mar 7, 2026</span>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px;">
+            <button class="btn-ghost" data-clickable>Load more articles</button>
+        </div>
+    </section>
+
+    <section class="cta-banner" style="padding: 80px 24px;">
+        <div class="cta-inner">
+            <h2>Subscribe to our newsletter</h2>
+            <p>Weekly insights on design systems, delivered to your inbox.</p>
+            <div class="cta-form">
+                <input type="email" placeholder="you@company.com" class="cta-input">
+                <button class="btn-primary">Subscribe →</button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-bottom">
+            <p>&copy; 2026 Meridian. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="qa-diagnostics.js"></script>
+    <script src="traffic-simulator.js"></script>
+    <script src="site.js"></script>
+</body>
+</html>

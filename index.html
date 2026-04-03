@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meridian — Design Systems for Growing Teams</title>
+    <meta name="description" content="Meridian helps product teams build consistent, scalable interfaces. Ship faster with shared components.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- CONVERT TRACKING SCRIPT PLACEHOLDER — replace with your actual snippet -->
+    <!-- <script src="https://cdn-4.convertexperiments.com/v1/js/ACCOUNT_ID-PROJECT_ID.js"></script> -->
+</head>
+<body>
+    <!-- QA Diagnostics Panel (toggle with Ctrl+Shift+Q) -->
+    <div id="qa-panel" class="qa-panel hidden">
+        <div class="qa-panel-header">
+            <h3>🔬 Convert QA Diagnostics</h3>
+            <button id="qa-close" class="qa-close">&times;</button>
+        </div>
+        <div class="qa-panel-body">
+            <div class="qa-tabs">
+                <button class="qa-tab active" data-tab="detection">Script Detection</button>
+                <button class="qa-tab" data-tab="network">Network Monitor</button>
+                <button class="qa-tab" data-tab="websocket">WebSocket</button>
+                <button class="qa-tab" data-tab="simulation">Traffic Sim</button>
+            </div>
+
+            <!-- TAB: Script Detection -->
+            <div class="qa-tab-content active" id="tab-detection">
+                <div class="qa-status-grid">
+                    <div class="qa-status-card" id="status-main-script">
+                        <div class="qa-status-indicator pending"></div>
+                        <div>
+                            <strong>Main Tracking Script</strong>
+                            <p class="qa-detail" id="detail-main-script">Checking...</p>
+                        </div>
+                    </div>
+                    <div class="qa-status-card" id="status-signals-script">
+                        <div class="qa-status-indicator pending"></div>
+                        <div>
+                            <strong>Signals Script</strong>
+                            <p class="qa-detail" id="detail-signals-script">Checking...</p>
+                        </div>
+                    </div>
+                    <div class="qa-status-card" id="status-domain">
+                        <div class="qa-status-indicator pending"></div>
+                        <div>
+                            <strong>Script Source Domain</strong>
+                            <p class="qa-detail" id="detail-domain">Checking...</p>
+                        </div>
+                    </div>
+                    <div class="qa-status-card" id="status-custom-domain">
+                        <div class="qa-status-indicator pending"></div>
+                        <div>
+                            <strong>Custom Domain</strong>
+                            <p class="qa-detail" id="detail-custom-domain">Checking...</p>
+                        </div>
+                    </div>
+                    <div class="qa-status-card" id="status-sampling">
+                        <div class="qa-status-indicator pending"></div>
+                        <div>
+                            <strong>Signals Sampling</strong>
+                            <p class="qa-detail" id="detail-sampling">Checking...</p>
+                        </div>
+                    </div>
+                    <div class="qa-status-card" id="status-experience">
+                        <div class="qa-status-indicator pending"></div>
+                        <div>
+                            <strong>Active Experiences</strong>
+                            <p class="qa-detail" id="detail-experience">Checking...</p>
+                        </div>
+                    </div>
+                </div>
+                <button id="btn-recheck" class="qa-btn">Re-check All</button>
+                <button id="btn-export-detection" class="qa-btn secondary">Export Report</button>
+            </div>
+
+            <!-- TAB: Network Monitor -->
+            <div class="qa-tab-content" id="tab-network">
+                <div class="qa-filter-bar">
+                    <label><input type="checkbox" id="filter-scripts" checked> Scripts</label>
+                    <label><input type="checkbox" id="filter-xhr" checked> XHR/Fetch</label>
+                    <label><input type="checkbox" id="filter-beacon" checked> Beacons</label>
+                    <label><input type="checkbox" id="filter-ws" checked> WebSocket</label>
+                    <button id="btn-clear-network" class="qa-btn small">Clear</button>
+                </div>
+                <div id="network-log" class="qa-log"></div>
+                <div class="qa-summary-bar">
+                    <span id="network-count">0 requests</span>
+                    <span id="network-convert-count">0 Convert-related</span>
+                </div>
+            </div>
+
+            <!-- TAB: WebSocket -->
+            <div class="qa-tab-content" id="tab-websocket">
+                <div class="qa-status-card" id="status-ws-heatmap">
+                    <div class="qa-status-indicator pending"></div>
+                    <div>
+                        <strong>Heatmap WebSocket</strong>
+                        <p class="qa-detail" id="detail-ws-heatmap">Not detected</p>
+                    </div>
+                </div>
+                <div class="qa-status-card" id="status-ws-signals">
+                    <div class="qa-status-indicator pending"></div>
+                    <div>
+                        <strong>Signals/Recording WebSocket</strong>
+                        <p class="qa-detail" id="detail-ws-signals">Not detected</p>
+                    </div>
+                </div>
+                <div class="qa-ws-details">
+                    <h4>WebSocket Frames Log</h4>
+                    <div id="ws-log" class="qa-log"></div>
+                </div>
+                <div class="qa-ws-details">
+                    <h4>Connection Details</h4>
+                    <pre id="ws-details" class="qa-pre">No active WebSocket connections detected.</pre>
+                </div>
+            </div>
+
+            <!-- TAB: Traffic Simulation -->
+            <div class="qa-tab-content" id="tab-simulation">
+                <div class="qa-sim-controls">
+                    <h4>Built-in Traffic Simulator</h4>
+                    <p class="qa-hint">Simulates real user interactions on this page. Runs in-browser — no Selenium needed.</p>
+                    <div class="qa-sim-options">
+                        <label>
+                            <input type="checkbox" id="sim-clicks" checked> Clicks
+                            <span class="qa-hint">(random elements, CTAs, nav)</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" id="sim-scrolls" checked> Scrolls
+                            <span class="qa-hint">(smooth, fast, stick scrolling)</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" id="sim-mouse" checked> Mouse Movement
+                            <span class="qa-hint">(hover, hesitation patterns)</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" id="sim-rage" checked> Rage Clicks
+                            <span class="qa-hint">(rapid clicks same spot)</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" id="sim-dead" checked> Dead Clicks
+                            <span class="qa-hint">(clicks on non-interactive elements)</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" id="sim-tabs" checked> Tab Switching
+                            <span class="qa-hint">(visibility changes, blur/focus)</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" id="sim-forms" checked> Form Interactions
+                            <span class="qa-hint">(typing, field focus, hesitation)</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" id="sim-resize" checked> Viewport Resize
+                            <span class="qa-hint">(desktop/mobile switching)</span>
+                        </label>
+                    </div>
+                    <div class="qa-sim-speed">
+                        <label>Speed: </label>
+                        <select id="sim-speed">
+                            <option value="slow">Slow (human-like)</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="fast">Fast (stress test)</option>
+                        </select>
+                        <label style="margin-left:12px">Duration: </label>
+                        <select id="sim-duration">
+                            <option value="30">30 seconds</option>
+                            <option value="60" selected>1 minute</option>
+                            <option value="180">3 minutes</option>
+                            <option value="300">5 minutes</option>
+                            <option value="0">Until stopped</option>
+                        </select>
+                    </div>
+                    <div class="qa-sim-buttons">
+                        <button id="btn-start-sim" class="qa-btn">▶ Start Simulation</button>
+                        <button id="btn-stop-sim" class="qa-btn danger" disabled>■ Stop</button>
+                    </div>
+                    <div id="sim-stats" class="qa-sim-stats hidden">
+                        <div class="qa-stat"><span id="stat-clicks">0</span> clicks</div>
+                        <div class="qa-stat"><span id="stat-scrolls">0</span> scrolls</div>
+                        <div class="qa-stat"><span id="stat-moves">0</span> mouse moves</div>
+                        <div class="qa-stat"><span id="stat-rage">0</span> rage clicks</div>
+                        <div class="qa-stat"><span id="stat-dead">0</span> dead clicks</div>
+                        <div class="qa-stat"><span id="stat-tabs">0</span> tab switches</div>
+                        <div class="qa-stat"><span id="stat-forms">0</span> form interactions</div>
+                        <div class="qa-stat"><span id="stat-elapsed">0s</span> elapsed</div>
+                    </div>
+                    <div id="sim-log" class="qa-log hidden"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating QA toggle button -->
+    <button id="qa-toggle" class="qa-toggle" title="Open QA Panel (Ctrl+Shift+Q)">🔬</button>
+
+    <!-- ============ ACTUAL SITE CONTENT ============ -->
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="/" class="logo">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="2.5"/><path d="M8 14h12M14 8v12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                Meridian
+            </a>
+            <div class="nav-links">
+                <a href="/features.html">Features</a>
+                <a href="/pricing.html">Pricing</a>
+                <a href="/blog.html">Blog</a>
+                <a href="/contact.html">Contact</a>
+            </div>
+            <div class="nav-actions">
+                <a href="#login" class="btn-ghost">Log in</a>
+                <a href="#signup" class="btn-primary">Start free trial</a>
+            </div>
+            <button class="mobile-menu-btn" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">Now in public beta</div>
+            <h1>Design systems<br>that actually<br><em>ship</em></h1>
+            <p class="hero-sub">Meridian gives product teams a shared component library, tokens, and documentation — so you stop rebuilding the same button 47 times.</p>
+            <div class="hero-ctas">
+                <a href="#signup" class="btn-primary large">Get started free</a>
+                <a href="#demo" class="btn-ghost large">Watch demo →</a>
+            </div>
+            <div class="hero-proof">
+                <div class="avatars">
+                    <div class="avatar" style="background:#E8D5B7"></div>
+                    <div class="avatar" style="background:#B7D5E8"></div>
+                    <div class="avatar" style="background:#D5B7E8"></div>
+                    <div class="avatar" style="background:#B7E8C9"></div>
+                </div>
+                <span>2,400+ teams already building with Meridian</span>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="hero-mockup">
+                <div class="mockup-bar">
+                    <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                </div>
+                <div class="mockup-content">
+                    <div class="mock-sidebar">
+                        <div class="mock-item active"></div>
+                        <div class="mock-item"></div>
+                        <div class="mock-item"></div>
+                        <div class="mock-item"></div>
+                    </div>
+                    <div class="mock-main">
+                        <div class="mock-card"></div>
+                        <div class="mock-card wide"></div>
+                        <div class="mock-card"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="logos-section">
+        <p class="logos-label">Trusted by teams at</p>
+        <div class="logos-row">
+            <span class="logo-fake">Acme Corp</span>
+            <span class="logo-fake">Nimbus</span>
+            <span class="logo-fake">Terraform</span>
+            <span class="logo-fake">Pulse AI</span>
+            <span class="logo-fake">Kinetic</span>
+            <span class="logo-fake">Baseform</span>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="section-header">
+            <h2>Everything your team needs<br>to stay in sync</h2>
+            <p>From tokens to components to documentation — Meridian covers the full design system lifecycle.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card" data-clickable>
+                <div class="feature-icon">🎨</div>
+                <h3>Design Tokens</h3>
+                <p>Colors, spacing, typography — managed in one place. Push changes across every component instantly.</p>
+                <a href="#" class="feature-link">Learn more →</a>
+            </div>
+            <div class="feature-card" data-clickable>
+                <div class="feature-icon">🧩</div>
+                <h3>Component Library</h3>
+                <p>React, Vue, and Web Components out of the box. Fully accessible, fully customizable.</p>
+                <a href="#" class="feature-link">Learn more →</a>
+            </div>
+            <div class="feature-card" data-clickable>
+                <div class="feature-icon">📖</div>
+                <h3>Living Documentation</h3>
+                <p>Auto-generated docs that stay in sync with your codebase. Never maintain a stale Confluence page again.</p>
+                <a href="#" class="feature-link">Learn more →</a>
+            </div>
+            <div class="feature-card" data-clickable>
+                <div class="feature-icon">🔄</div>
+                <h3>Version Control</h3>
+                <p>Track changes, review diffs, and roll back with confidence. Git-native workflow.</p>
+                <a href="#" class="feature-link">Learn more →</a>
+            </div>
+            <div class="feature-card" data-clickable>
+                <div class="feature-icon">⚡</div>
+                <h3>Figma Sync</h3>
+                <p>Two-way sync between Figma and code. Designers and developers finally speaking the same language.</p>
+                <a href="#" class="feature-link">Learn more →</a>
+            </div>
+            <div class="feature-card" data-clickable>
+                <div class="feature-icon">📊</div>
+                <h3>Adoption Analytics</h3>
+                <p>See which components are being used, where, and by whom. Identify gaps and optimize coverage.</p>
+                <a href="#" class="feature-link">Learn more →</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-banner">
+        <div class="cta-inner">
+            <h2>Ready to unify your design system?</h2>
+            <p>Start your 14-day free trial. No credit card required.</p>
+            <div class="cta-form">
+                <input type="email" id="email-cta" placeholder="you@company.com" class="cta-input" autocomplete="email">
+                <button class="btn-primary" id="cta-submit">Get started →</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials">
+        <div class="section-header">
+            <h2>What teams are saying</h2>
+        </div>
+        <div class="testimonials-grid">
+            <div class="testimonial-card" data-clickable>
+                <p class="quote">"Meridian cut our component development time in half. We went from 3 weeks per component to under a week."</p>
+                <div class="testimonial-author">
+                    <div class="avatar" style="background:#E8D5B7"></div>
+                    <div>
+                        <strong>Sarah Chen</strong>
+                        <span>Head of Design, Acme</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card" data-clickable>
+                <p class="quote">"The Figma sync alone saved our team 10 hours a week. No more manual handoffs."</p>
+                <div class="testimonial-author">
+                    <div class="avatar" style="background:#B7D5E8"></div>
+                    <div>
+                        <strong>Marcus Rivera</strong>
+                        <span>Engineering Lead, Pulse AI</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card" data-clickable>
+                <p class="quote">"We finally have a single source of truth. Our 12-person team ships 3x faster now."</p>
+                <div class="testimonial-author">
+                    <div class="avatar" style="background:#D5B7E8"></div>
+                    <div>
+                        <strong>Priya Sharma</strong>
+                        <span>VP Product, Kinetic</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing-preview" id="pricing">
+        <div class="section-header">
+            <h2>Simple, transparent pricing</h2>
+            <p>Start free. Upgrade as you grow.</p>
+        </div>
+        <div class="pricing-cards">
+            <div class="price-card" data-clickable>
+                <h3>Starter</h3>
+                <div class="price">$0<span>/mo</span></div>
+                <p>For small teams getting started</p>
+                <ul>
+                    <li>Up to 3 team members</li>
+                    <li>50 components</li>
+                    <li>Basic tokens</li>
+                    <li>Community support</li>
+                </ul>
+                <a href="#signup" class="btn-ghost full">Get started free</a>
+            </div>
+            <div class="price-card featured" data-clickable>
+                <div class="card-badge">Most popular</div>
+                <h3>Pro</h3>
+                <div class="price">$29<span>/mo per seat</span></div>
+                <p>For growing product teams</p>
+                <ul>
+                    <li>Unlimited team members</li>
+                    <li>Unlimited components</li>
+                    <li>Figma sync</li>
+                    <li>Version control</li>
+                    <li>Priority support</li>
+                </ul>
+                <a href="#signup" class="btn-primary full">Start free trial</a>
+            </div>
+            <div class="price-card" data-clickable>
+                <h3>Enterprise</h3>
+                <div class="price">Custom</div>
+                <p>For organizations at scale</p>
+                <ul>
+                    <li>Everything in Pro</li>
+                    <li>SSO / SAML</li>
+                    <li>SLA guarantees</li>
+                    <li>Dedicated support</li>
+                    <li>Custom integrations</li>
+                </ul>
+                <a href="#contact" class="btn-ghost full">Contact sales</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq-section">
+        <div class="section-header">
+            <h2>Frequently asked questions</h2>
+        </div>
+        <div class="faq-list">
+            <div class="faq-item" data-clickable>
+                <button class="faq-question">Can I import my existing Figma components?</button>
+                <div class="faq-answer"><p>Yes! Meridian includes a Figma plugin that imports your existing components and maps them to code. The sync works both ways — changes in Figma or code propagate automatically.</p></div>
+            </div>
+            <div class="faq-item" data-clickable>
+                <button class="faq-question">Which frameworks do you support?</button>
+                <div class="faq-answer"><p>We currently support React, Vue 3, Svelte, and Web Components. Angular support is coming in Q2. All components are fully accessible and follow WAI-ARIA guidelines.</p></div>
+            </div>
+            <div class="faq-item" data-clickable>
+                <button class="faq-question">How does version control work?</button>
+                <div class="faq-answer"><p>Meridian uses a Git-native workflow. Every token and component change is tracked as a commit. You can review diffs, create branches, and roll back to any previous version.</p></div>
+            </div>
+            <div class="faq-item" data-clickable>
+                <button class="faq-question">What happens after my trial ends?</button>
+                <div class="faq-answer"><p>After the 14-day trial, you can continue on the free Starter plan or upgrade to Pro. Your data is never deleted — everything stays accessible.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-col">
+                <a href="/" class="logo">
+                    <svg width="24" height="24" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="2.5"/><path d="M8 14h12M14 8v12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    Meridian
+                </a>
+                <p>Design systems that actually ship.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Product</h4>
+                <a href="/features.html">Features</a>
+                <a href="/pricing.html">Pricing</a>
+                <a href="/blog.html">Blog</a>
+                <a href="#">Changelog</a>
+            </div>
+            <div class="footer-col">
+                <h4>Resources</h4>
+                <a href="#">Documentation</a>
+                <a href="#">API Reference</a>
+                <a href="#">Tutorials</a>
+                <a href="#">Community</a>
+            </div>
+            <div class="footer-col">
+                <h4>Company</h4>
+                <a href="/contact.html">Contact</a>
+                <a href="#">About</a>
+                <a href="#">Careers</a>
+                <a href="#">Privacy</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Meridian. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="qa-diagnostics.js"></script>
+    <script src="traffic-simulator.js"></script>
+    <script src="site.js"></script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing — Meridian</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="qa-panel" class="qa-panel hidden"></div>
+    <button id="qa-toggle" class="qa-toggle" title="Open QA Panel (Ctrl+Shift+Q)">🔬</button>
+
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="/" class="logo">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="2.5"/><path d="M8 14h12M14 8v12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                Meridian
+            </a>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/features.html">Features</a>
+                <a href="/pricing.html" style="color: var(--ink);">Pricing</a>
+                <a href="/blog.html">Blog</a>
+                <a href="/contact.html">Contact</a>
+            </div>
+            <div class="nav-actions">
+                <a href="#login" class="btn-ghost">Log in</a>
+                <a href="#signup" class="btn-primary">Start free trial</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="pricing-preview" style="padding-top: 80px;">
+        <div class="section-header">
+            <h2>Simple, transparent pricing</h2>
+            <p>Start free. Scale as you grow. No hidden fees.</p>
+            <div style="margin-top: 20px; display: flex; align-items: center; justify-content: center; gap: 12px;">
+                <span style="font-size: 0.9rem; color: var(--ink-light);">Monthly</span>
+                <label style="position: relative; display: inline-block; width: 48px; height: 26px; cursor: pointer;">
+                    <input type="checkbox" id="billing-toggle" style="opacity: 0; width: 0; height: 0;">
+                    <span style="position: absolute; inset: 0; background: var(--border); border-radius: 13px; transition: 0.3s;"></span>
+                    <span id="toggle-knob" style="position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; background: white; border-radius: 50%; transition: 0.3s; box-shadow: var(--shadow-sm);"></span>
+                </label>
+                <span style="font-size: 0.9rem; color: var(--ink-light);">Annual <span style="color: var(--accent); font-weight: 600;">(save 20%)</span></span>
+            </div>
+        </div>
+        <div class="pricing-cards">
+            <div class="price-card" data-clickable>
+                <h3>Starter</h3>
+                <div class="price monthly-price">$0<span>/mo</span></div>
+                <div class="price annual-price" style="display:none;">$0<span>/mo</span></div>
+                <p>For small teams getting started</p>
+                <ul>
+                    <li>Up to 3 team members</li>
+                    <li>50 components</li>
+                    <li>Basic tokens</li>
+                    <li>Community support</li>
+                </ul>
+                <a href="#signup" class="btn-ghost full">Get started free</a>
+            </div>
+            <div class="price-card featured" data-clickable>
+                <div class="card-badge">Most popular</div>
+                <h3>Pro</h3>
+                <div class="price monthly-price">$29<span>/seat/mo</span></div>
+                <div class="price annual-price" style="display:none;">$23<span>/seat/mo</span></div>
+                <p>For growing product teams</p>
+                <ul>
+                    <li>Unlimited team members</li>
+                    <li>Unlimited components</li>
+                    <li>Figma sync</li>
+                    <li>Version control</li>
+                    <li>Priority support</li>
+                    <li>Adoption analytics</li>
+                </ul>
+                <a href="#signup" class="btn-primary full">Start 14-day trial</a>
+            </div>
+            <div class="price-card" data-clickable>
+                <h3>Enterprise</h3>
+                <div class="price">Custom</div>
+                <p>For organizations at scale</p>
+                <ul>
+                    <li>Everything in Pro</li>
+                    <li>SSO / SAML</li>
+                    <li>SLA guarantees</li>
+                    <li>Dedicated support</li>
+                    <li>Custom integrations</li>
+                    <li>On-premise option</li>
+                </ul>
+                <a href="/contact.html" class="btn-ghost full">Contact sales</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq-section">
+        <div class="section-header">
+            <h2>Pricing FAQ</h2>
+        </div>
+        <div class="faq-list">
+            <div class="faq-item" data-clickable>
+                <button class="faq-question">Can I switch plans anytime?</button>
+                <div class="faq-answer"><p>Yes! Upgrade or downgrade at any time. When upgrading, you'll be charged the prorated difference. When downgrading, the credit applies to your next billing cycle.</p></div>
+            </div>
+            <div class="faq-item" data-clickable>
+                <button class="faq-question">What counts as a "seat"?</button>
+                <div class="faq-answer"><p>A seat is any team member who can create, edit, or publish components and tokens. View-only access is free and doesn't count toward your seat limit.</p></div>
+            </div>
+            <div class="faq-item" data-clickable>
+                <button class="faq-question">Do you offer discounts for startups or nonprofits?</button>
+                <div class="faq-answer"><p>Yes! Startups with fewer than 20 employees and nonprofits get 50% off any plan. Contact us with proof of eligibility.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-bottom">
+            <p>&copy; 2026 Meridian. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="qa-diagnostics.js"></script>
+    <script src="traffic-simulator.js"></script>
+    <script src="site.js"></script>
+    <script>
+        // Pricing toggle
+        const toggle = document.getElementById('billing-toggle');
+        const knob = document.getElementById('toggle-knob');
+        if (toggle) {
+            toggle.addEventListener('change', () => {
+                const isAnnual = toggle.checked;
+                knob.style.transform = isAnnual ? 'translateX(22px)' : 'translateX(0)';
+                knob.parentElement.previousElementSibling.style.background = isAnnual ? 'var(--accent)' : 'var(--border)';
+                document.querySelectorAll('.monthly-price').forEach(p => p.style.display = isAnnual ? 'none' : '');
+                document.querySelectorAll('.annual-price').forEach(p => p.style.display = isAnnual ? '' : 'none');
+            });
+        }
+    </script>
+</body>
+</html>
