@@ -29,13 +29,13 @@
         // Patterns that indicate Convert-related requests (includes TWIPLA — Convert's heatmap/recording provider)
         convertPatterns: [
             'convertexperiments', 'convertapps', 'convert.com',
-            'signals.insights', 'conv_', '_conv_',
+            'signals.insights', 'signals.observer', 'signals.worker', 'conv_', '_conv_',
             '/v1/js/', '/metrics/v1/', '/api/v1/project-optional-settings',
             'visitor-analytics', 'twipla', 'va.tawk',
         ],
         // Script filename patterns
         mainScriptPattern: /\/v1\/js\/(\d+)-(\d+)\.js/,
-        signalsScriptPattern: /signals\.insights\.min\.js/,
+        signalsScriptPattern: /signals\.(insights|observer|worker)\.min\.js/,
         // WebSocket patterns — TWIPLA uses wss://...visitor-analytics... for heatmap data
         wsPatterns: [
             'visitor-analytics', 'twipla', 'va.tawk',
@@ -169,6 +169,31 @@
         state.networkLog.push(entry);
         renderNetworkEntry(entry);
         updateNetworkCounts();
+
+        // Also check if this is a signals-related request (loaded via fetch, not just <script>)
+        if (CONFIG.signalsScriptPattern.test(url)) {
+            state.signalsScript = {
+                url,
+                domain: getDomain(url),
+                isCustomDomain: isCustomDomain(getDomain(url)),
+                loadedVia: type,
+            };
+            state.isInSample = true;
+            updateDetectionUI();
+        }
+        // Catch /signals/ API paths (e.g. /signals/i.../100417776)
+        if (url.includes('/signals/') && entry.isConvert) {
+            if (!state.signalsScript) {
+                state.signalsScript = {
+                    url,
+                    domain: getDomain(url),
+                    isCustomDomain: isCustomDomain(getDomain(url)),
+                    loadedVia: type,
+                };
+            }
+            state.isInSample = true;
+            updateDetectionUI();
+        }
     }
 
     function trackWebSocket(ws, url) {
