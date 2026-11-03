@@ -10,3 +10,30 @@
 /tour             /tour/step-1                                301
 /tour/step-1      /tour/step-2                                302
 /tour/step-2      /features                                   301
+
+# Older offer links
+/offer-303        /pricing                                     303
+/elsewhere        https://example.com/                         302
+
+# Old link chain (from /r/1: 20 redirects, from /r/0: 21)
+/r/0              /r/1                                         301
+/r/1              /r/2                                         301
+/r/2              /r/3                                         301
+/r/3              /r/4                                         301
+/r/4              /r/5                                         301
+/r/5              /r/6                                         301
+/r/6              /r/7                                         301
+/r/7              /r/8                                         301
+/r/8              /r/9                                         301
+/r/9              /r/10                                        301
+/r/10             /r/11                                        301
+/r/11             /r/12                                        301
+/r/12             /r/13                                        301
+/r/13             /r/14                                        301
+/r/14             /r/15                                        301
+/r/15             /r/16                                        301
+/r/16             /r/17                                        301
+/r/17             /r/18                                        301
+/r/18             /r/19                                        301
+/r/19             /r/20                                        301
+/r/20             /features                                    301
