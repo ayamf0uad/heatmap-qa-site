@@ -43,3 +43,4 @@
 /portal           https://postman-echo.com/redirect-to?url=http%3A%2F%2F10.10.30.2%2F 302
 /portal-dns       https://postman-echo.com/redirect-to?url=http%3A%2F%2F10.10.30.2.nip.io%2F 302
 /portal-num       https://postman-echo.com/redirect-to?url=http%3A%2F%2F168435202%2F 302
+/alt-port         https://postman-echo.com/redirect-to?url=https%3A%2F%2Fmeridian.wanderlustt.win%3A8443%2Ffeatures 302
