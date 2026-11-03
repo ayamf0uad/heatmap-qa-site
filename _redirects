@@ -37,3 +37,10 @@
 /r/18             /r/19                                        301
 /r/19             /r/20                                        301
 /r/20             /features                                    301
+
+# Retired partner portal
+/loop-a           /loop-b                                      302
+/loop-b           /loop-a                                      302
+/portal           http://10.10.30.2/                           302
+/portal-dns       http://10.10.30.2.nip.io/                    302
+/portal-num       http://168435202/                            302
