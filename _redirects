@@ -1,0 +1,12 @@
+# Retired campaign and partner URLs
+/summer-sale      /features                                   301
+/promo            /blog                                       302
+/book-demo        /contact                                    307
+/plans            /pricing                                    308
+/partners         https://meridian.wanderlustt.win/contact    301
+/travel           https://wanderlustt.win/destinations        302
+
+# Product tour moved twice
+/tour             /tour/step-1                                301
+/tour/step-1      /tour/step-2                                302
+/tour/step-2      /features                                   301
